@@ -5,12 +5,12 @@ import ExpressMongoSanitize from "express-mongo-sanitize";
 import compression from "compression";
 import cors from "cors";
 import httpStatus from "http-status";
-import config from "./config/config";
-import { morgan } from "./modules/logger";
-import { ApiError, errorConverter, errorHandler } from "./modules/errors";
+import { ENVIRONMENT } from "./config/config";
+import { morgan } from "@dripstore/common/build";
+import { ApiError, errorConverter, errorHandler, } from "@dripstore/common/build";
 import routes from "./routes/v1";
 const app = express();
-if (config.env !== "test") {
+if (ENVIRONMENT !== "test") {
     app.use(morgan.successHandler);
     app.use(morgan.errorHandler);
 }

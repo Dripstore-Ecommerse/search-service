@@ -5,14 +5,19 @@ import ExpressMongoSanitize from "express-mongo-sanitize";
 import compression from "compression";
 import cors from "cors";
 import httpStatus from "http-status";
-import config from "./config/config";
-import { morgan } from "./modules/logger";
-import { ApiError, errorConverter, errorHandler } from "./modules/errors";
+import { ENVIRONMENT } from "./config/config";
+import { morgan } from "@dripstore/common/build";
+import {
+  ApiError,
+  errorConverter,
+  errorHandler,
+} from "@dripstore/common/build";
 import routes from "./routes/v1";
+import RabbitMQConsumer from "./modules/utils/RabbitMQConsumer";
 
 const app: Express = express();
 
-if (config.env !== "test") {
+if (ENVIRONMENT !== "test") {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
@@ -39,6 +44,11 @@ app.use(compression());
 
 // v1 api routes
 app.use("/", routes);
+
+new RabbitMQConsumer(
+  "amqp://default_user_uJAu0ttkJDvBBolxyPe:eDbrE5bOGGXMFsQh3LpmtLIDqcQzvB52@10.105.181.43",
+  "product"
+);
 
 // send back a 404 error for any unknown api request
 app.use((_req, _res, next) => {

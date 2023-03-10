@@ -1,13 +1,8 @@
-import mongoose from "mongoose";
 import app from "./app";
-import config from "./config/config";
-import logger from "./modules/logger/logger";
-let server;
-mongoose.connect(config.mongoose.url).then(() => {
-    logger.info("Connected to MongoDB");
-    server = app.listen(config.port, () => {
-        logger.info(`Listening to port ${config.port}`);
-    });
+import { PORT } from "./config/config";
+import { logger } from "@dripstore/common/build";
+let server = app.listen(PORT, () => {
+    logger.info(`Listening to port ${PORT}`);
 });
 const exitHandler = () => {
     if (server) {

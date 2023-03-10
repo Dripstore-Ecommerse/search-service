@@ -1,10 +1,10 @@
 import express from "express";
-import productRoute from "./products.route";
+import searchRoute from "./search.route";
 const router = express.Router();
 const defaultIRoute = [
     {
-        path: "/products",
-        route: productRoute,
+        path: "/search",
+        route: searchRoute,
     },
 ];
 defaultIRoute.forEach((route) => {

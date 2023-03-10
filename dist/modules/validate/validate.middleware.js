@@ -1,7 +1,7 @@
 import Joi from "joi";
 import httpStatus from "http-status";
 import pick from "../utils/pick";
-import ApiError from "../errors/ApiError";
+import { ApiError } from "@dripstore/common/build";
 const validate = (schema) => (req, _res, next) => {
     const validSchema = pick(schema, ["params", "query", "body"]);
     const object = pick(req, Object.keys(validSchema));
